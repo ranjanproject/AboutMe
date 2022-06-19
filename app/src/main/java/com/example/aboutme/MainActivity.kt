@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             yourNameEt.visibility = View.GONE
             myName?.nickName = yourNameEt.text.toString()
+            invalidateAll() //for refreshing the value in edit text
             nickNameTv.text = yourNameEt.text.toString()
             nickNameTv.visibility = View.VISIBLE
             doneBtn.visibility = View.GONE
