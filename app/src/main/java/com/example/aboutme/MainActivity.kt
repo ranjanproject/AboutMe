@@ -17,6 +17,7 @@ import java.sql.DatabaseMetaData
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val myName: MyName = MyName("Pratik Ranjan")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +27,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init(){
+        setName()
         doneButton()
         nickNameTV()
+    }
+
+    private fun setName(){
+
+        binding.myName = myName
     }
 
 
@@ -49,10 +56,11 @@ class MainActivity : AppCompatActivity() {
     private fun addNickName(){
 
         binding.apply {
-            binding.yourNameEt.visibility = View.GONE
-            binding.nickNameTv.text = binding.yourNameEt.text.toString()
-            binding.nickNameTv.visibility = View.VISIBLE
-            binding.doneBtn.visibility = View.GONE
+            yourNameEt.visibility = View.GONE
+            myName?.nickName = yourNameEt.text.toString()
+            nickNameTv.text = yourNameEt.text.toString()
+            nickNameTv.visibility = View.VISIBLE
+            doneBtn.visibility = View.GONE
         }
 
     }
@@ -62,9 +70,9 @@ class MainActivity : AppCompatActivity() {
         val edt = binding.yourNameEt
 
         binding.apply {
-            binding.nickNameTv.visibility = View.GONE
-            binding.doneBtn.visibility = View.VISIBLE
-            binding.yourNameEt.visibility = View.VISIBLE
+            nickNameTv.visibility = View.GONE
+            doneBtn.visibility = View.VISIBLE
+            yourNameEt.visibility = View.VISIBLE
         }
 
         edt.requestFocus()
