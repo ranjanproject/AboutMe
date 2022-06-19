@@ -1,6 +1,9 @@
 package com.example.aboutme
 
 import android.content.Context
+import android.databinding.DataBindingUtil
+import android.databinding.DataBindingUtil.bind
+import android.databinding.DataBindingUtil.setContentView
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,11 +11,17 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.example.aboutme.databinding.ActivityMainBinding
+import java.sql.DatabaseMetaData
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
         init()
     }
 
@@ -24,36 +33,40 @@ class MainActivity : AppCompatActivity() {
 
     private fun doneButton(){
 
-        findViewById<Button>(R.id.done_btn).setOnClickListener {
+        binding.doneBtn.setOnClickListener {
             addNickName()
         }
     }
 
     private fun nickNameTV(){
 
-        findViewById<TextView>(R.id.nick_name_tv).setOnClickListener {
+        binding.nickNameTv.setOnClickListener {
             updateNickName()
         }
+
     }
 
     private fun addNickName(){
-        val edt = findViewById<EditText>(R.id.your_name_et)
-        val nickName = findViewById<TextView>(R.id.nick_name_tv)
-        val btn = findViewById<Button>(R.id.done_btn)
-        edt.visibility = View.GONE
-        nickName.text = edt.text.toString()
-        nickName.visibility = View.VISIBLE
-        btn.visibility = View.GONE
+
+        binding.apply {
+            binding.yourNameEt.visibility = View.GONE
+            binding.nickNameTv.text = binding.yourNameEt.text.toString()
+            binding.nickNameTv.visibility = View.VISIBLE
+            binding.doneBtn.visibility = View.GONE
+        }
 
     }
 
     private fun updateNickName(){
-        val edt = findViewById<EditText>(R.id.your_name_et)
-        val nickName = findViewById<TextView>(R.id.nick_name_tv)
-        val btn = findViewById<Button>(R.id.done_btn)
-        nickName.visibility = View.GONE
-        btn.visibility = View.VISIBLE
-        edt.visibility = View.VISIBLE
+
+        val edt = binding.yourNameEt
+
+        binding.apply {
+            binding.nickNameTv.visibility = View.GONE
+            binding.doneBtn.visibility = View.VISIBLE
+            binding.yourNameEt.visibility = View.VISIBLE
+        }
+
         edt.requestFocus()
         // Show the keyboard.
 
